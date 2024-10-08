@@ -1,6 +1,6 @@
 {
   "name": "react-pdfjs-viewonly",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "main": "dist/index.js",
   "files": [
     "dist",
@@ -37,5 +37,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adityabhatt13/react-pdfjs-viewonly.git"
-  }
+  },
+  "keywords": ["pdfjs", "pdf","react"]
 }

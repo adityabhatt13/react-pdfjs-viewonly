@@ -13888,6 +13888,11 @@ const PDFViewerApplication = {
     const queryString = document.location.search.substring(1);
     const params = parseQueryString(queryString);
     file = params.get("file") ?? AppOptions.get("defaultUrl");
+
+
+  
+
+
     validateFileURL(file);
     const fileInput = (this._openFileInput = document.createElement("input"));
     fileInput.id = "fileInput";
@@ -13946,6 +13951,7 @@ const PDFViewerApplication = {
       appConfig.findBar?.toggleButton?.classList.add("hidden");
     }
     if (file) {
+
       this.open({
         url: file,
       });
@@ -14136,12 +14142,35 @@ const PDFViewerApplication = {
     await Promise.all(promises);
   },
   async open(args) {
+
+    const queryString = document.location.search.substring(1);
+    const params = parseQueryString(queryString);
+
+   const isHeaderVisible = params.get("isheadervisible") ?? 'true';
+
+
+if(isHeaderVisible ==='false'){
+
+
+
+ const test =  document.getElementById('main__header')
+
+ console.log(test)
+
+
+ test?.classList?.add('hidden')
+}
+
+
+
+
     if (this.pdfLoadingTask) {
       await this.close();
     }
     const workerParams = AppOptions.getAll(OptionKind.WORKER);
     Object.assign(GlobalWorkerOptions, workerParams);
     if (args.url) {
+      
       this.setTitleUsingUrl(args.originalUrl || args.url, args.url);
     }
     const apiParams = AppOptions.getAll(OptionKind.API);
@@ -14271,6 +14300,9 @@ const PDFViewerApplication = {
     }
   },
   load(pdfDocument) {
+
+
+
     this.pdfDocument = pdfDocument;
     pdfDocument.getDownloadInfo().then(({ length }) => {
       this._contentLength = length;
@@ -15157,6 +15189,8 @@ initCom(PDFViewerApplication);
       return;
     }
     const file = evt.fileInput.files[0];
+
+
     this.open({
       url: URL.createObjectURL(file),
       originalUrl: file.name,
