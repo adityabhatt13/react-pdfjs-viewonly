@@ -3500,7 +3500,7 @@ body.wait::before{
 #mainContainer{
   position:absolute;
   inset:0;
-  min-width:350px;
+  min-width:300px;
 }
 
 #sidebarContent{
