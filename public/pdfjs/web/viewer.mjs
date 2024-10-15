@@ -801,7 +801,7 @@ const defaultOptions = {
     kind: OptionKind.VIEWER + OptionKind.PREFERENCE,
   },
   spreadModeOnLoad: {
-    value: -1,
+    value: 0,
     kind: OptionKind.VIEWER + OptionKind.PREFERENCE,
   },
   textLayerMode: {
@@ -892,7 +892,7 @@ const defaultOptions = {
 };
 {
   defaultOptions.defaultUrl = {
-    value: "https://pdfobject.com/pdf/sample.pdf",
+    value: "",
     kind: OptionKind.VIEWER,
   };
   defaultOptions.sandboxBundleSrc = {
@@ -13893,7 +13893,7 @@ const PDFViewerApplication = {
   
 
 
-    validateFileURL(file);
+    // validateFileURL(file);
     const fileInput = (this._openFileInput = document.createElement("input"));
     fileInput.id = "fileInput";
     fileInput.hidden = true;
@@ -14203,9 +14203,10 @@ if(isHeaderVisible ==='false'){
           key = "pdfjs-invalid-file-error";
         } else if (reason instanceof MissingPDFException) {
           key = "pdfjs-missing-file-error";
-        } else if (reason instanceof UnexpectedResponseException) {
-          key = "pdfjs-unexpected-response-error";
-        }
+        } 
+        // else if (reason instanceof UnexpectedResponseException) {
+        //   key = "pdfjs-unexpected-response-error";
+        // }
         return this._documentError(key, {
           message: reason.message,
         }).then(() => {
@@ -14956,9 +14957,9 @@ if(isHeaderVisible ==='false'){
         signal,
       }
     );
-    eventBus._on("fileinputchange", onFileInputChange.bind(this), {
-      signal,
-    });
+    // eventBus._on("fileinputchange", onFileInputChange.bind(this), {
+    //   signal,
+    // });
     // eventBus._on("openfile", onOpenFile.bind(this), {
     //   signal,
     // });
@@ -15155,51 +15156,51 @@ if(isHeaderVisible ==='false'){
   },
 };
 initCom(PDFViewerApplication);
-{
-  PDFPrintServiceFactory.initGlobals(PDFViewerApplication);
-}
-{
-  const HOSTED_VIEWER_ORIGINS = [
-    "null",
-    "http://mozilla.github.io",
-    "https://mozilla.github.io",
-  ];
-  var validateFileURL = function (file) {
-    if (!file) {
-      return;
-    }
-    try {
-      const viewerOrigin = new URL(window.location.href).origin || "null";
-      if (HOSTED_VIEWER_ORIGINS.includes(viewerOrigin)) {
-        return;
-      }
-      // const fileOrigin = new URL(file, window.location.href).origin;
-      // if (fileOrigin !== viewerOrigin) {
-      //   throw new Error("file origin does not match viewer's");
-      // }
-    } catch (ex) {
-      PDFViewerApplication._documentError("pdfjs-loading-error", {
-        message: ex.message,
-      });
-      throw ex;
-    }
-  };
-  var onFileInputChange = function (evt) {
-    if (this.pdfViewer?.isInPresentationMode) {
-      return;
-    }
-    const file = evt.fileInput.files[0];
+// {
+//   PDFPrintServiceFactory.initGlobals(PDFViewerApplication);
+// }
+// {
+//   const HOSTED_VIEWER_ORIGINS = [
+//     "null",
+//     "http://mozilla.github.io",
+//     "https://mozilla.github.io",
+//   ];
+//   var validateFileURL = function (file) {
+//     if (!file) {
+//       return;
+//     }
+//     try {
+//       const viewerOrigin = new URL(window.location.href).origin || "null";
+//       if (HOSTED_VIEWER_ORIGINS.includes(viewerOrigin)) {
+//         return;
+//       }
+//       // const fileOrigin = new URL(file, window.location.href).origin;
+//       // if (fileOrigin !== viewerOrigin) {
+//       //   throw new Error("file origin does not match viewer's");
+//       // }
+//     } catch (ex) {
+//       PDFViewerApplication._documentError("pdfjs-loading-error", {
+//         message: ex.message,
+//       });
+//       throw ex;
+//     }
+//   };
+//   var onFileInputChange = function (evt) {
+//     if (this.pdfViewer?.isInPresentationMode) {
+//       return;
+//     }
+//     const file = evt.fileInput.files[0];
 
 
-    this.open({
-      url: URL.createObjectURL(file),
-      originalUrl: file.name,
-    });
-  };
-  var onOpenFile = function (evt) {
-    this._openFileInput?.click();
-  };
-}
+//     this.open({
+//       url: URL.createObjectURL(file),
+//       originalUrl: file.name,
+//     });
+//   };
+//   var onOpenFile = function (evt) {
+//     this._openFileInput?.click();
+//   };
+// }
 function onPageRender({ pageNumber }) {
   if (pageNumber === this.page) {
     this.toolbar?.updateLoadingIndicatorState(true);
